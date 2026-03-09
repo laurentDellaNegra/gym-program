@@ -1,6 +1,7 @@
-const CACHE = "gym-v1";
+const CACHE = "gym-v2";
 const ASSETS = [
-  "./programme_gym.html",
+  "./",
+  "./index.html",
   "./icon-192.png",
   "./icon-512.png",
   "./apple-touch-icon.png",

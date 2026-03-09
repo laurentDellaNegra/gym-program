@@ -61,7 +61,10 @@
 
       .splash {
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         z-index: 1000;
         background: var(--bg);
         display: flex;
@@ -69,7 +72,12 @@
         align-items: center;
         justify-content: center;
         gap: 2rem;
-        animation: splashOut 0.5s ease 1.8s forwards;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+      }
+      .splash.hide {
+        opacity: 0;
+        pointer-events: none;
       }
       .splash h1 {
         font-family: "Bebas Neue", sans-serif;
@@ -77,8 +85,16 @@
         letter-spacing: 0.15em;
         background: linear-gradient(135deg, var(--la), var(--ca));
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: pulseIn 0.6s ease;
+        color: transparent;
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      .splash.ready h1 {
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 0.6s ease, transform 0.6s ease;
       }
       .splash .bar {
         width: 120px;
@@ -93,28 +109,10 @@
         height: 100%;
         width: 0;
         background: linear-gradient(90deg, var(--la), var(--ca));
-        animation: load 1.6s ease forwards;
       }
-      @keyframes load {
-        to {
-          width: 100%;
-        }
-      }
-      @keyframes pulseIn {
-        from {
-          opacity: 0;
-          transform: scale(0.8);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-      @keyframes splashOut {
-        to {
-          opacity: 0;
-          pointer-events: none;
-        }
+      .splash.ready .bar::after {
+        width: 100%;
+        transition: width 1.6s ease;
       }
 
       .profile-selector {
@@ -1683,10 +1681,21 @@
         if (timerSeconds <= 5 && timerSeconds > 0) d.classList.add("warning");
         if (timerSeconds <= 0) d.classList.add("done");
       }
-      setTimeout(() => {
-        const sp = document.querySelector(".splash");
-        if (sp) sp.remove();
-      }, 2500);
+      // Splash: wait for fonts then animate
+      const splash = document.querySelector(".splash");
+      function startSplash() {
+        if (!splash) return;
+        splash.classList.add("ready");
+        setTimeout(() => splash.classList.add("hide"), 1800);
+        setTimeout(() => splash.remove(), 2400);
+      }
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(startSplash);
+      } else {
+        setTimeout(startSplash, 300);
+      }
+      // Fallback in case fonts.ready never resolves
+      setTimeout(() => { if (splash && !splash.classList.contains("ready")) startSplash(); }, 3000);
 
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("sw.js");
