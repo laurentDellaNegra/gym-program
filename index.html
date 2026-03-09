@@ -7,7 +7,10 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="Gym" />
     <meta name="theme-color" content="#0c0c0e" />
     <title>Programme Musculation</title>
@@ -714,19 +717,24 @@
       }
       function exTimerBtns(rest) {
         const secs = parseRest(rest);
-        if (!secs.length) return '';
-        let btns = '';
-        secs.forEach(t => {
-          const l = t >= 120 ? `${t/60}min` : t >= 60 ? `${Math.floor(t/60)}m${t%60||''}`.replace(/m$/,'min') : `${t}s`;
+        if (!secs.length) return "";
+        let btns = "";
+        secs.forEach((t) => {
+          const l =
+            t >= 120
+              ? `${t / 60}min`
+              : t >= 60
+                ? `${Math.floor(t / 60)}m${t % 60 || ""}`.replace(/m$/, "min")
+                : `${t}s`;
           btns += `<button class="rest-btn" onclick="startTimer(${t},event)">⏱ ${l}</button>`;
         });
         return `<div class="ex-timer">${btns}</div>`;
       }
       function toggleVideo(btn) {
-        const wrap = btn.closest('.exercise').querySelector('.ex-video-wrap');
-        const video = wrap.querySelector('video');
-        const isOpen = wrap.classList.toggle('open');
-        btn.classList.toggle('active', isOpen);
+        const wrap = btn.closest(".exercise").querySelector(".ex-video-wrap");
+        const video = wrap.querySelector("video");
+        const isOpen = wrap.classList.toggle("open");
+        btn.classList.toggle("active", isOpen);
         if (isOpen) {
           video.play();
         } else {
@@ -1546,7 +1554,8 @@
       let audioCtx;
       function playBeep() {
         try {
-          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (!audioCtx)
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
           osc.connect(gain);
@@ -1575,20 +1584,23 @@
             osc3.start();
             osc3.stop(audioCtx.currentTime + 0.3);
           }, 450);
-        } catch(e) {}
+        } catch (e) {}
       }
 
       // Wake lock to keep screen on during timer
       let wakeLock = null;
       async function requestWakeLock() {
         try {
-          if ('wakeLock' in navigator) {
-            wakeLock = await navigator.wakeLock.request('screen');
+          if ("wakeLock" in navigator) {
+            wakeLock = await navigator.wakeLock.request("screen");
           }
-        } catch(e) {}
+        } catch (e) {}
       }
       function releaseWakeLock() {
-        if (wakeLock) { wakeLock.release(); wakeLock = null; }
+        if (wakeLock) {
+          wakeLock.release();
+          wakeLock = null;
+        }
       }
 
       // Request notification permission on first timer use
@@ -1596,13 +1608,16 @@
       function askNotif() {
         if (notifAsked) return;
         notifAsked = true;
-        if ('Notification' in window && Notification.permission === 'default') {
+        if ("Notification" in window && Notification.permission === "default") {
           Notification.requestPermission();
         }
       }
       function sendNotif() {
-        if ('Notification' in window && Notification.permission === 'granted') {
-          new Notification('Repos terminé !', { body: 'C\'est reparti 💪', icon: 'icon-192.png' });
+        if ("Notification" in window && Notification.permission === "granted") {
+          new Notification("Repos terminé !", {
+            body: "C'est reparti 💪",
+            icon: "icon-192.png",
+          });
         }
       }
 
@@ -1621,8 +1636,9 @@
         updT();
         document.getElementById("timer-bar").classList.add("visible");
         // Unlock audio on iOS (requires user gesture)
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+        if (!audioCtx)
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
         askNotif();
         requestWakeLock();
         timerInterval = setInterval(() => {
