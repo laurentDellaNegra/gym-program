@@ -1,0 +1,1680 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Gym" />
+    <meta name="theme-color" content="#0c0c0e" />
+    <title>Programme Musculation</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="icon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0c0c0e;
+        --surface: #16161a;
+        --surface2: #1e1e24;
+        --border: #2a2a32;
+        --text: #eaeaea;
+        --text-dim: #8a8a96;
+        --la: #4e8ef7;
+        --lg: rgba(78, 142, 247, 0.15);
+        --ca: #e8637a;
+        --cg: rgba(232, 99, 122, 0.15);
+        --accent: var(--la);
+        --glow: var(--lg);
+        --green: #34d399;
+        --yellow: #fbbf24;
+        --yt: #ff0000;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+      html {
+        font-size: 16px;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100dvh;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .splash {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: var(--bg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        animation: splashOut 0.5s ease 1.8s forwards;
+      }
+      .splash h1 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 3rem;
+        letter-spacing: 0.15em;
+        background: linear-gradient(135deg, var(--la), var(--ca));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: pulseIn 0.6s ease;
+      }
+      .splash .bar {
+        width: 120px;
+        height: 3px;
+        background: var(--border);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .splash .bar::after {
+        content: "";
+        display: block;
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--la), var(--ca));
+        animation: load 1.6s ease forwards;
+      }
+      @keyframes load {
+        to {
+          width: 100%;
+        }
+      }
+      @keyframes pulseIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      @keyframes splashOut {
+        to {
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+
+      .profile-selector {
+        display: flex;
+        width: 100%;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
+      }
+      .profile-tab {
+        flex: 1;
+        padding: 1rem 0.5rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        border-bottom: 3px solid transparent;
+        color: var(--text-dim);
+        background: transparent;
+        font-family: "DM Sans", sans-serif;
+      }
+      .profile-tab.active[data-profile="laurent"] {
+        color: var(--la);
+        border-bottom-color: var(--la);
+        background: var(--lg);
+      }
+      .profile-tab.active[data-profile="chamsia"] {
+        color: var(--ca);
+        border-bottom-color: var(--ca);
+        background: var(--cg);
+      }
+      .profile-tab .tab-icon {
+        font-size: 1.2rem;
+        display: block;
+        margin-bottom: 2px;
+      }
+
+      .app {
+        display: none;
+        padding-bottom: 5rem;
+      }
+      .app.active {
+        display: block;
+      }
+
+      .hero {
+        padding: 2rem 1.25rem 1.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -30%;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: var(--accent);
+        opacity: 0.06;
+        filter: blur(60px);
+      }
+      .hero-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+      .hero h2 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.4rem;
+        letter-spacing: 0.05em;
+        line-height: 1.1;
+      }
+      .hero-stats {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+      }
+      .hero-stat {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 0.6rem 0.9rem;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .hero-stat strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .phase-selector {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0 1.25rem;
+        margin-bottom: 1.25rem;
+      }
+      .phase-btn {
+        flex: 1;
+        padding: 0.7rem;
+        border-radius: 10px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text-dim);
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s;
+        font-family: "DM Sans", sans-serif;
+        text-align: center;
+      }
+      .phase-btn.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+        box-shadow: 0 4px 20px var(--glow);
+      }
+      .phase-btn .phase-label {
+        display: block;
+        font-size: 0.68rem;
+        font-weight: 400;
+        opacity: 0.8;
+        margin-top: 2px;
+      }
+
+      .day-card {
+        margin: 0 1rem 1rem;
+        border-radius: 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        animation: fadeUp 0.4s ease both;
+      }
+      .day-card:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .day-card:nth-child(3) {
+        animation-delay: 0.16s;
+      }
+      .day-header {
+        padding: 1rem 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        user-select: none;
+      }
+      .day-header h3 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.35rem;
+        letter-spacing: 0.04em;
+      }
+      .day-header .day-tag {
+        font-size: 0.68rem;
+        font-weight: 600;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        background: var(--glow);
+        color: var(--accent);
+      }
+      .day-chevron {
+        transition: transform 0.3s;
+        font-size: 1.2rem;
+        color: var(--text-dim);
+      }
+      .day-card.open .day-chevron {
+        transform: rotate(180deg);
+      }
+      .day-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      .day-card.open .day-body {
+        max-height: 8000px;
+      }
+
+      .exercise {
+        padding: 0.9rem 1.1rem;
+        border-top: 1px solid var(--border);
+        position: relative;
+        transition: background 0.2s;
+      }
+      .exercise.done {
+        opacity: 0.35;
+      }
+      .exercise.done .ex-check {
+        display: flex;
+      }
+      .ex-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+      .ex-left {
+        flex: 1;
+        cursor: pointer;
+      }
+      .exercise-name {
+        font-weight: 700;
+        font-size: 1rem;
+        line-height: 1.3;
+        margin-bottom: 0.35rem;
+      }
+      .exercise-details {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.3rem;
+      }
+      .exercise-chip {
+        font-size: 0.73rem;
+        font-weight: 500;
+        padding: 0.2rem 0.5rem;
+        border-radius: 6px;
+        background: var(--surface2);
+        color: var(--text-dim);
+        white-space: nowrap;
+      }
+      .exercise-chip.sets {
+        color: var(--accent);
+        background: var(--glow);
+      }
+      .exercise-note {
+        font-size: 0.78rem;
+        color: var(--text-dim);
+        line-height: 1.4;
+        margin-top: 0.25rem;
+        padding-right: 0.5rem;
+      }
+      .ex-check {
+        display: none;
+        position: absolute;
+        right: 0.8rem;
+        top: 0.8rem;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #000;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .yt-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.45rem 0.7rem;
+        border-radius: 8px;
+        background: #1a1a22;
+        border: 1px solid #333;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s;
+        font-family: "DM Sans", sans-serif;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .yt-btn:hover,
+      .yt-btn:active {
+        background: #2a1a1a;
+        border-color: var(--yt);
+      }
+      .yt-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .video-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.45rem 0.7rem;
+        border-radius: 8px;
+        background: rgba(78, 142, 247, 0.12);
+        border: 1px solid rgba(78, 142, 247, 0.3);
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "DM Sans", sans-serif;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .video-btn:hover,
+      .video-btn:active {
+        background: rgba(78, 142, 247, 0.25);
+        border-color: var(--accent);
+      }
+      .video-btn.active {
+        background: rgba(78, 142, 247, 0.25);
+        border-color: var(--accent);
+      }
+      .ex-video-wrap {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+        margin-top: 0;
+      }
+      .ex-video-wrap.open {
+        max-height: 500px;
+        margin-top: 0.6rem;
+      }
+      .ex-video-wrap video {
+        width: 100%;
+        max-height: 400px;
+        border-radius: 10px;
+        background: #000;
+        object-fit: contain;
+      }
+      .ex-btns {
+        display: flex;
+        gap: 0.4rem;
+        flex-shrink: 0;
+      }
+      .ex-timer {
+        display: flex;
+        gap: 0.35rem;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .ex-timer .rest-btn {
+        font-size: 0.72rem;
+        padding: 0.3rem 0.6rem;
+      }
+
+      .info-section {
+        margin: 1.25rem 1rem;
+        padding: 1.1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+      }
+      .info-section h3 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.75rem;
+        color: var(--accent);
+      }
+      .info-section p {
+        font-size: 0.88rem;
+        line-height: 1.6;
+        color: var(--text-dim);
+        margin-bottom: 0.6rem;
+      }
+      .info-section strong {
+        color: var(--text);
+      }
+      .macro-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+      .macro-item {
+        background: var(--surface2);
+        border-radius: 10px;
+        padding: 0.75rem;
+        text-align: center;
+      }
+      .macro-item .macro-val {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.5rem;
+        color: var(--accent);
+      }
+      .macro-item .macro-label {
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        margin-top: 2px;
+      }
+
+      .rest-timers {
+        display: flex;
+        gap: 0.4rem;
+        padding: 0.7rem 1.1rem;
+        border-top: 1px solid var(--border);
+        flex-wrap: wrap;
+      }
+      .rest-btn {
+        padding: 0.4rem 0.7rem;
+        border-radius: 8px;
+        font-size: 0.75rem;
+        background: var(--surface2);
+        color: var(--text-dim);
+        border: 1px solid var(--border);
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+        font-weight: 500;
+        transition: all 0.2s;
+      }
+      .rest-btn:active {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .timer-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        z-index: 200;
+        backdrop-filter: blur(10px);
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+      }
+      .timer-bar.visible {
+        transform: translateY(0);
+      }
+      .timer-display {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.2rem;
+        min-width: 80px;
+        text-align: center;
+        letter-spacing: 0.05em;
+      }
+      .timer-display.warning {
+        color: var(--yellow);
+      }
+      .timer-display.done {
+        color: var(--green);
+      }
+      .timer-btns {
+        display: flex;
+        gap: 0.5rem;
+        flex: 1;
+        justify-content: flex-end;
+      }
+      .timer-btn {
+        padding: 0.6rem 1rem;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        font-family: "DM Sans", sans-serif;
+        transition: all 0.2s;
+      }
+      .timer-btn.secondary {
+        background: var(--surface2);
+        color: var(--text-dim);
+        border: 1px solid var(--border);
+      }
+      .timer-label {
+        font-size: 0.7rem;
+        color: var(--text-dim);
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      ::-webkit-scrollbar {
+        width: 0;
+      }
+      @media (max-width: 500px) {
+        .timer-bar {
+          padding: 0.6rem 1rem 1.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="splash">
+      <h1>GYM PROGRAM</h1>
+      <div class="bar"></div>
+    </div>
+
+    <nav class="profile-selector">
+      <button
+        class="profile-tab active"
+        data-profile="laurent"
+        onclick="switchProfile('laurent')"
+      >
+        <span class="tab-icon">🏋️</span> Laurent
+      </button>
+      <button
+        class="profile-tab"
+        data-profile="chamsia"
+        onclick="switchProfile('chamsia')"
+      >
+        <span class="tab-icon">💪</span> Chamsia
+      </button>
+    </nav>
+
+    <div class="app active" id="app-laurent"></div>
+    <div class="app" id="app-chamsia"></div>
+
+    <div class="timer-bar" id="timer-bar">
+      <div>
+        <div class="timer-label">REPOS</div>
+        <div class="timer-display" id="timer-display">0:00</div>
+      </div>
+      <div class="timer-btns">
+        <button class="timer-btn secondary" onclick="addTime(15)">+15s</button>
+        <button class="timer-btn secondary" onclick="stopTimer()">✕</button>
+      </div>
+    </div>
+
+    <script>
+      const ytIcon = `<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="4" fill="#FF0000"/><path d="M10 8.5v7l6-3.5-6-3.5z" fill="white"/></svg>`;
+
+      const V = {
+        squat_goblet: "goblet+squat+dumbbell+tutorial",
+        back_squat: "barbell+back+squat+tutorial+form",
+        front_squat: "barbell+front+squat+tutorial",
+        sumo_squat: "sumo+squat+dumbbell+tutorial",
+        squat_bulgare: "bulgarian+split+squat+tutorial",
+        fentes: "walking+lunges+dumbbell+tutorial",
+        fentes_arriere: "reverse+lunges+tutorial",
+        dev_couche: "dumbbell+bench+press+tutorial",
+        dev_incline: "incline+dumbbell+press+tutorial",
+        rowing_haltere: "one+arm+dumbbell+row+tutorial",
+        rowing_barre: "barbell+row+tutorial+form",
+        dev_epaules: "dumbbell+shoulder+press+tutorial",
+        chest_press: "machine+chest+press+tutorial",
+        curl: "bicep+curl+dumbbell+tutorial",
+        curl_marteau: "hammer+curl+tutorial",
+        ext_triceps: "tricep+pushdown+cable+tutorial",
+        skull_crusher: "skull+crusher+tutorial",
+        ext_triceps_tete: "overhead+tricep+extension+tutorial",
+        rdl: "romanian+deadlift+dumbbell+tutorial",
+        deadlift: "conventional+deadlift+tutorial",
+        leg_press: "leg+press+machine+tutorial",
+        tirage_vertical: "lat+pulldown+tutorial",
+        tractions: "pull+up+chin+up+tutorial",
+        elev_lat: "lateral+raise+dumbbell+tutorial",
+        face_pull: "face+pull+cable+tutorial",
+        planche: "plank+exercise+form+tutorial",
+        planche_laterale: "side+plank+tutorial+form",
+        hip_thrust: "hip+thrust+barbell+tutorial",
+        dips: "parallel+bar+dips+tutorial",
+        crunchs_cable: "cable+crunch+tutorial",
+        releves_jambes: "hanging+leg+raise+tutorial",
+        ab_wheel: "ab+wheel+rollout+tutorial",
+        dead_bug: "dead+bug+exercise+tutorial",
+        bird_dog: "bird+dog+exercise+tutorial",
+        vacuum: "stomach+vacuum+exercise+tutorial",
+        hypopressive: "hypopressive+exercise+tutorial+postpartum",
+        pallof: "pallof+press+cable+band+tutorial",
+        pompes_inclinees: "incline+push+up+tutorial",
+        step_up: "dumbbell+step+up+tutorial",
+        pont_fessier: "single+leg+glute+bridge+tutorial",
+        leg_curl: "lying+leg+curl+machine+tutorial",
+        abducteurs: "hip+abduction+machine+tutorial",
+        mountain_climbers: "slow+mountain+climbers+tutorial",
+        circuit_abdos: "ab+circuit+dead+bug+plank+vacuum",
+      };
+
+      function ytUrl(key) {
+        return `https://www.youtube.com/results?search_query=${V[key] || key}`;
+      }
+      function ytBtn(key) {
+        return `<a class="yt-btn" href="${ytUrl(key)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${ytIcon}</a>`;
+      }
+      function videoBtn() {
+        return `<button class="video-btn" onclick="event.stopPropagation();toggleVideo(this)">▶ Vidéo</button>`;
+      }
+      function videoWrap(key) {
+        return `<div class="ex-video-wrap"><video src="video/${key}.mp4" playsinline preload="none" controls loop muted></video></div>`;
+      }
+      function parseRest(rest) {
+        if (!rest) return [];
+        // "2-3min" → [120, 180], "90s" → [90], "2min" → [120], "75s" → [75], "45s" → [45]
+        const m = rest.match(/(\d+)\s*-\s*(\d+)\s*min/);
+        if (m) return [parseInt(m[1]) * 60, parseInt(m[2]) * 60];
+        const m2 = rest.match(/(\d+)\s*min/);
+        if (m2) return [parseInt(m2[1]) * 60];
+        const m3 = rest.match(/(\d+)\s*s/);
+        if (m3) return [parseInt(m3[1])];
+        return [];
+      }
+      function exTimerBtns(rest) {
+        const secs = parseRest(rest);
+        if (!secs.length) return '';
+        let btns = '';
+        secs.forEach(t => {
+          const l = t >= 120 ? `${t/60}min` : t >= 60 ? `${Math.floor(t/60)}m${t%60||''}`.replace(/m$/,'min') : `${t}s`;
+          btns += `<button class="rest-btn" onclick="startTimer(${t},event)">⏱ ${l}</button>`;
+        });
+        return `<div class="ex-timer">${btns}</div>`;
+      }
+      function toggleVideo(btn) {
+        const wrap = btn.closest('.exercise').querySelector('.ex-video-wrap');
+        const video = wrap.querySelector('video');
+        const isOpen = wrap.classList.toggle('open');
+        btn.classList.toggle('active', isOpen);
+        if (isOpen) {
+          video.play();
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+
+      const LP1 = {
+        days: [
+          {
+            title: "Jour A — Accent Poussée",
+            timers: [60, 90, 120],
+            exercises: [
+              {
+                name: "Squat goblet (haltère)",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "3-1-1-0",
+                img: "squat_goblet",
+                note: "Debout, tiens un haltère contre ta poitrine à deux mains. Descends en pliant les genoux jusqu'à ce que tes cuisses soient parallèles au sol, puis remonte en poussant sur les talons.",
+              },
+              {
+                name: "Développé couché haltères",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "3-0-1-0",
+                img: "dev_couche",
+                note: "Allongé sur un banc plat, un haltère dans chaque main au niveau de la poitrine. Pousse les haltères vers le haut jusqu'à tendre les bras, puis redescends lentement.",
+              },
+              {
+                name: "Rowing haltère 1 bras",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "2-1-1-0",
+                img: "rowing_haltere",
+                note: "Un genou et une main sur le banc, l'autre main tient un haltère. Tire l'haltère vers ta hanche en serrant l'omoplate, puis redescends lentement.",
+              },
+              {
+                name: "Développé épaules haltères",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "2-0-1-0",
+                img: "dev_epaules",
+                note: "Assis ou debout, haltères au niveau des épaules. Pousse les haltères au-dessus de ta tête en tendant les bras, puis redescends aux épaules.",
+              },
+              {
+                name: "Curl biceps haltères",
+                sets: "2 × 12-15",
+                rest: "60s",
+                tempo: "2-0-1-0",
+                img: "curl",
+                note: "Debout, bras le long du corps, un haltère dans chaque main. Plie les coudes pour monter les haltères vers les épaules sans bouger le haut des bras.",
+              },
+              {
+                name: "Extensions triceps poulie",
+                sets: "2 × 12-15",
+                rest: "60s",
+                tempo: "2-0-1-0",
+                img: "ext_triceps",
+                note: "Face à la poulie haute, attrape la barre ou la corde. Pousse vers le bas en tendant les bras, coudes collés au corps. Remonte lentement.",
+              },
+              {
+                name: "Planche abdos",
+                sets: "3 × 30-45s",
+                rest: "60s",
+                tempo: "Iso",
+                img: "planche",
+                note: "En appui sur les avant-bras et les pointes de pieds, corps parfaitement aligné. Serre les abdos et les fessiers. Tiens la position sans creuser le dos.",
+              },
+            ],
+          },
+          {
+            title: "Jour B — Accent Tirage",
+            timers: [60, 90, 120],
+            exercises: [
+              {
+                name: "Presse à cuisses",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "3-1-1-0",
+                img: "leg_press",
+                note: "Assis sur la machine, pieds écartés sur la plateforme. Pousse avec les jambes pour déplacer la charge, puis plie les genoux pour redescendre lentement.",
+              },
+              {
+                name: "Soulevé de terre roumain",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "3-1-1-0",
+                img: "rdl",
+                note: "Debout avec la barre ou des haltères devant toi. Penche le buste en poussant les fesses en arrière, descends le long des jambes. Remonte en serrant les fessiers.",
+              },
+              {
+                name: "Tirage vertical poulie",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "2-1-1-0",
+                img: "tirage_vertical",
+                note: "Assis face à la machine, attrape la barre large. Tire la barre vers le haut de la poitrine en serrant les omoplates. Remonte la barre lentement.",
+              },
+              {
+                name: "Développé incliné haltères",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "3-0-1-0",
+                img: "dev_incline",
+                note: "Sur un banc incliné à ~30°, haltères au niveau des épaules. Pousse vers le haut en tendant les bras. Cible le haut des pectoraux.",
+              },
+              {
+                name: "Élévations latérales",
+                sets: "3 × 12-15",
+                rest: "60s",
+                tempo: "2-1-1-0",
+                img: "elev_lat",
+                note: "Debout, un haltère léger dans chaque main. Monte les bras sur les côtés jusqu'à hauteur d'épaule (comme un oiseau), puis redescends lentement.",
+              },
+              {
+                name: "Face pull poulie",
+                sets: "2 × 15",
+                rest: "60s",
+                tempo: "2-1-1-0",
+                img: "face_pull",
+                note: "Poulie réglée en hauteur, corde attachée. Tire la corde vers ton visage en écartant les mains, coudes hauts. Excellent pour la posture.",
+              },
+              {
+                name: "Crunchs câble",
+                sets: "3 × 12-15",
+                rest: "60s",
+                tempo: "2-1-1-0",
+                img: "crunchs_cable",
+                note: "À genoux devant la poulie haute, tiens la corde derrière ta tête. Enroule le buste vers le sol en contractant les abdos, puis remonte lentement.",
+              },
+            ],
+          },
+          {
+            title: "Jour C — Accent Jambes",
+            timers: [60, 90, 120],
+            exercises: [
+              {
+                name: "Fentes marchées haltères",
+                sets: "3 × 10/jambe",
+                rest: "90s",
+                tempo: "2-1-1-0",
+                img: "fentes",
+                note: "Debout, un haltère dans chaque main. Fais un grand pas en avant, descends le genou arrière vers le sol, puis pousse pour avancer et alterner.",
+              },
+              {
+                name: "Hip thrust machine ou barre",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "2-1-1-0",
+                img: "hip_thrust",
+                note: "Dos appuyé sur un banc à hauteur des omoplates, barre sur les hanches. Pousse les hanches vers le haut en serrant les fessiers, puis redescends.",
+              },
+              {
+                name: "Rowing barre",
+                sets: "3 × 10-12",
+                rest: "90s",
+                tempo: "2-1-1-0",
+                img: "rowing_barre",
+                note: "Penché en avant, dos droit, tiens la barre à deux mains. Tire la barre vers ton nombril en serrant les omoplates, puis redescends.",
+              },
+              {
+                name: "Dips (assistés si besoin)",
+                sets: "3 × 8-12",
+                rest: "90s",
+                tempo: "2-0-1-0",
+                img: "dips",
+                note: "Mains sur les barres parallèles, bras tendus. Descends en pliant les coudes, puis remonte en poussant. Utilise la machine assistée si besoin.",
+              },
+              {
+                name: "Curl marteau haltères",
+                sets: "2 × 12-15",
+                rest: "60s",
+                tempo: "2-0-1-0",
+                img: "curl_marteau",
+                note: "Comme le curl classique mais les pouces pointent vers le haut (prise neutre). Cible le brachial et donne de l'épaisseur aux bras.",
+              },
+              {
+                name: "Barre au front (skull crusher)",
+                sets: "2 × 12-15",
+                rest: "60s",
+                tempo: "2-0-1-0",
+                img: "skull_crusher",
+                note: "Allongé sur un banc, barre tenue bras tendus au-dessus. Plie les coudes pour descendre la barre vers le front, puis tends les bras pour remonter.",
+              },
+              {
+                name: "Relevés de jambes suspendu",
+                sets: "3 × 10-15",
+                rest: "60s",
+                tempo: "2-0-1-0",
+                img: "releves_jambes",
+                note: "Suspendu à une barre de traction, bras tendus. Monte les jambes (tendues ou pliées) devant toi le plus haut possible, puis redescends sans balancer.",
+              },
+            ],
+          },
+        ],
+      };
+
+      const LP2 = {
+        days: [
+          {
+            title: "Jour A — Force Haut du Corps",
+            timers: [60, 90, 120, 180],
+            exercises: [
+              {
+                name: "Back squat barre",
+                sets: "4 × 6-8",
+                rest: "2-3min",
+                tempo: "3-1-1-0",
+                img: "back_squat",
+                note: "Barre posée sur les trapèzes (haut du dos). Descends en squat profond, cuisses au moins parallèles, puis remonte en poussant fort sur les talons.",
+              },
+              {
+                name: "Développé couché barre",
+                sets: "4 × 6-8",
+                rest: "2-3min",
+                tempo: "3-0-1-0",
+                img: "dev_couche",
+                note: "Allongé sur un banc plat, barre au-dessus de la poitrine. Descends la barre en contrôle vers la poitrine, puis pousse de manière explosive.",
+              },
+              {
+                name: "Rowing haltère 1 bras",
+                sets: "4 × 8-10",
+                rest: "90s",
+                tempo: "2-1-1-0",
+                img: "rowing_haltere",
+                note: "Un genou sur banc, tire l'haltère vers la hanche en serrant l'omoplate.",
+              },
+              {
+                name: "Développé militaire barre",
+                sets: "3 × 8-10",
+                rest: "2min",
+                tempo: "2-0-1-0",
+                img: "dev_epaules",
+                note: "Debout, barre au niveau des clavicules. Pousse la barre au-dessus de la tête en tendant les bras, puis redescends lentement aux clavicules.",
+              },
+              {
+                name: "Curl barre EZ",
+                sets: "3 × 8-10",
+                rest: "60s",
+                tempo: "2-0-1-0",
+                img: "curl",
+                note: "Debout, tiens la barre EZ (barre coudée) en supination. Plie les coudes pour monter la barre, coudes fixes le long du corps.",
+              },
+              {
+                name: "Dips lestés",
+                sets: "3 × 8-10",
+                rest: "90s",
+                tempo: "2-0-1-0",
+                img: "dips",
+                note: "Même mouvement que les dips classiques mais avec une ceinture lestée autour de la taille pour ajouter du poids.",
+              },
+              {
+                name: "Planche lestée",
+                sets: "3 × 30-45s",
+                rest: "60s",
+                tempo: "Iso",
+                img: "planche",
+                note: "Position de planche classique mais avec un disque de fonte posé sur le haut du dos pour plus de difficulté.",
+              },
+            ],
+          },
+          {
+            title: "Jour B — Force Bas du Corps",
+            timers: [60, 90, 120, 180],
+            exercises: [
+              {
+                name: "Soulevé de terre conventionnel",
+                sets: "4 × 5-6",
+                rest: "3min",
+                tempo: "2-1-1-0",
+                img: "deadlift",
+                note: "Barre au sol, pieds sous la barre. Attrape la barre, dos droit, pousse dans le sol avec les jambes pour lever la barre le long du corps jusqu'à être debout.",
+              },
+              {
+                name: "Presse à cuisses (pieds hauts)",
+                sets: "4 × 8-10",
+                rest: "2min",
+                tempo: "3-1-1-0",
+                img: "leg_press",
+                note: "Pieds placés en haut de la plateforme pour cibler davantage les fessiers et les ischio-jambiers.",
+              },
+              {
+                name: "Tractions lestées / assistées",
+                sets: "4 × 6-8",
+                rest: "2min",
+                tempo: "2-1-1-0",
+                img: "tractions",
+                note: "Suspendu à une barre, tire-toi vers le haut jusqu'à ce que ton menton dépasse la barre. Utilise lest ou assistance selon ton niveau.",
+              },
+              {
+                name: "Développé incliné barre",
+                sets: "3 × 8-10",
+                rest: "2min",
+                tempo: "3-0-1-0",
+                img: "dev_incline",
+                note: "Banc incliné à ~30°, barre au niveau du haut de la poitrine. Pousse vers le haut pour cibler le haut des pectoraux.",
+              },
+              {
+                name: "Élévations lat. + face pull",
+                sets: "3 × 12+12",
+                rest: "60s",
+                tempo: "Superset",
+                img: "elev_lat",
+                note: "SUPERSET : fais 12 élévations latérales puis enchaîne immédiatement avec 12 face pulls sans repos entre les deux.",
+              },
+              {
+                name: "Leg curl allongé",
+                sets: "3 × 10-12",
+                rest: "60s",
+                tempo: "3-1-1-0",
+                img: "leg_curl",
+                note: "Allongé sur la machine face vers le bas. Plie les jambes pour amener le rouleau vers tes fessiers, puis redescends lentement.",
+              },
+              {
+                name: "Ab wheel / rollout",
+                sets: "3 × 8-12",
+                rest: "60s",
+                tempo: "2-1-1-0",
+                img: "ab_wheel",
+                note: "À genoux, mains sur la roue abdominale. Roule vers l'avant en gardant les abdos serrés, puis tire pour revenir. Ne creuse jamais le dos.",
+              },
+            ],
+          },
+          {
+            title: "Jour C — Volume",
+            timers: [60, 90, 120, 180],
+            exercises: [
+              {
+                name: "Front squat",
+                sets: "4 × 6-8",
+                rest: "2-3min",
+                tempo: "3-1-1-0",
+                img: "front_squat",
+                note: "Barre posée sur l'avant des épaules, coudes hauts. Descends en squat profond. Demande plus de mobilité que le back squat. Dos très droit.",
+              },
+              {
+                name: "Soulevé de terre roumain",
+                sets: "3 × 8-10",
+                rest: "2min",
+                tempo: "3-1-1-0",
+                img: "rdl",
+                note: "Debout, barre devant toi. Descends en poussant les fesses en arrière, jambes quasi tendues. Sentir l'étirement derrière les cuisses.",
+              },
+              {
+                name: "Rowing barre Pendlay",
+                sets: "4 × 6-8",
+                rest: "2min",
+                tempo: "1-0-1-0",
+                img: "rowing_barre",
+                note: "Comme le rowing classique mais la barre repose au sol à chaque répétition. Tire de manière explosive vers le nombril.",
+              },
+              {
+                name: "Développé couché haltères",
+                sets: "3 × 8-10",
+                rest: "90s",
+                tempo: "3-0-1-0",
+                img: "dev_couche",
+                note: "Banc plat, haltères. La descente est lente et contrôlée (3 secondes), la montée est dynamique.",
+              },
+              {
+                name: "Curl incliné haltères",
+                sets: "3 × 10-12",
+                rest: "60s",
+                tempo: "2-0-1-0",
+                img: "curl",
+                note: "Assis sur un banc incliné à 45°, bras pendants derrière. Plie les coudes pour monter les haltères. Étire bien le biceps en bas.",
+              },
+              {
+                name: "Extensions triceps au-dessus tête",
+                sets: "3 × 10-12",
+                rest: "60s",
+                tempo: "2-0-1-0",
+                img: "ext_triceps_tete",
+                note: "Debout ou assis, un haltère tenu à deux mains derrière la tête. Tends les bras vers le haut, coudes fixes pointés au plafond.",
+              },
+              {
+                name: "Crunchs câble + relevés jambes",
+                sets: "3 × 12+10",
+                rest: "60s",
+                tempo: "Superset",
+                img: "crunchs_cable",
+                note: "SUPERSET : enchaîne crunchs câble puis relevés de jambes suspendu sans repos entre les deux.",
+              },
+            ],
+          },
+        ],
+      };
+
+      const CP1 = {
+        days: [
+          {
+            title: "Jour A — Jambes & Poussée",
+            timers: [30, 45, 60],
+            exercises: [
+              {
+                name: "Squat goblet (haltère)",
+                sets: "3 × 12-15",
+                rest: "60s",
+                img: "squat_goblet",
+                note: "Haltère tenue contre la poitrine. Descends lentement en pliant les genoux, dos droit, puis remonte en poussant sur les talons.",
+              },
+              {
+                name: "Fentes arrière alternées",
+                sets: "3 × 12/jambe",
+                rest: "60s",
+                img: "fentes_arriere",
+                note: "Debout, fais un pas en arrière et descends le genou vers le sol. Remonte et alterne l'autre jambe. Plus doux pour les genoux que les fentes avant.",
+              },
+              {
+                name: "Hip thrust au sol",
+                sets: "3 × 15-20",
+                rest: "60s",
+                img: "hip_thrust",
+                note: "Allongée sur le dos, pieds à plat au sol, genoux pliés. Pousse les hanches vers le haut en serrant fort les fessiers 2 secondes en haut.",
+              },
+              {
+                name: "Pompes inclinées (banc)",
+                sets: "3 × 10-12",
+                rest: "60s",
+                img: "pompes_inclinees",
+                note: "Mains posées sur un banc (plus le banc est haut, plus c'est facile). Fais des pompes en descendant la poitrine vers le banc.",
+              },
+              {
+                name: "Rowing haltère 1 bras",
+                sets: "3 × 12/bras",
+                rest: "60s",
+                img: "rowing_haltere",
+                note: "Un genou et une main sur le banc. De l'autre main, tire l'haltère vers ta hanche en serrant l'omoplate.",
+              },
+              {
+                name: "🎯 Dead bug",
+                sets: "3 × 10/côté",
+                rest: "45s",
+                img: "dead_bug",
+                note: "Sur le dos, bras tendus vers le plafond, genoux pliés à 90°. Tends un bras et la jambe opposée en gardant le dos collé au sol. Alterne.",
+              },
+              {
+                name: "🎯 Respiration hypopressive",
+                sets: "3 × 5 cycles",
+                rest: "30s",
+                img: "hypopressive",
+                note: "Expire à fond tout l'air de tes poumons, puis aspire le ventre sous les côtes comme si tu voulais toucher ta colonne. Tiens 5-10s. Relâche et recommence.",
+              },
+            ],
+          },
+          {
+            title: "Jour B — Postérieur & Épaules",
+            timers: [30, 45, 60],
+            exercises: [
+              {
+                name: "Soulevé de terre roumain haltères",
+                sets: "3 × 12-15",
+                rest: "60s",
+                img: "rdl",
+                note: "Debout, haltères devant les cuisses. Penche le buste en poussant les fesses en arrière, descends les haltères le long des jambes. Tu dois sentir l'arrière des cuisses étirer.",
+              },
+              {
+                name: "Presse à cuisses",
+                sets: "3 × 12-15",
+                rest: "60s",
+                img: "leg_press",
+                note: "Assis sur la machine, place les pieds en haut de la plateforme pour mieux cibler les fessiers. Pousse et reviens lentement.",
+              },
+              {
+                name: "Step-up sur banc",
+                sets: "3 × 12/jambe",
+                rest: "60s",
+                img: "step_up",
+                note: "Face à un banc, monte dessus avec un pied puis l'autre. Redescends et recommence. Haltères légères dans les mains pour plus de difficulté.",
+              },
+              {
+                name: "Développé épaules haltères",
+                sets: "3 × 12",
+                rest: "60s",
+                img: "dev_epaules",
+                note: "Assise ou debout, haltères aux épaules. Pousse les haltères au-dessus de la tête puis redescends.",
+              },
+              {
+                name: "Élévations latérales",
+                sets: "3 × 15",
+                rest: "45s",
+                img: "elev_lat",
+                note: "Debout, haltères légers. Monte les bras sur les côtés jusqu'à hauteur d'épaule, comme un oiseau qui déploie ses ailes.",
+              },
+              {
+                name: "🎯 Planche sur avant-bras",
+                sets: "3 × 20-30s",
+                rest: "45s",
+                img: "planche",
+                note: "Sur les coudes et les pointes de pieds. Corps droit comme une planche. Rentre le nombril vers la colonne. Ne creuse pas le dos.",
+              },
+              {
+                name: "🎯 Bird dog",
+                sets: "3 × 10/côté",
+                rest: "45s",
+                img: "bird_dog",
+                note: "À quatre pattes, tends le bras droit devant et la jambe gauche derrière simultanément. Garde le dos plat et le ventre serré. Alterne.",
+              },
+            ],
+          },
+          {
+            title: "Jour C — Fessiers & Dos",
+            timers: [30, 45, 60],
+            exercises: [
+              {
+                name: "Sumo squat haltère",
+                sets: "3 × 15",
+                rest: "60s",
+                img: "sumo_squat",
+                note: "Pieds très écartés, pointes de pieds vers l'extérieur. Tiens un haltère au centre entre les jambes. Descends en squat large, remonte en serrant les fessiers.",
+              },
+              {
+                name: "Pont fessier unilatéral",
+                sets: "3 × 12/jambe",
+                rest: "60s",
+                img: "pont_fessier",
+                note: "Sur le dos, un pied au sol, l'autre jambe levée. Pousse la hanche vers le haut avec une seule jambe, serre le fessier 2s en haut.",
+              },
+              {
+                name: "Tirage vertical poulie",
+                sets: "3 × 12-15",
+                rest: "60s",
+                img: "tirage_vertical",
+                note: "Assise face à la poulie haute. Tire la barre vers le haut de ta poitrine en sentant le dos travailler. Remonte lentement.",
+              },
+              {
+                name: "Chest press machine",
+                sets: "3 × 12",
+                rest: "60s",
+                img: "chest_press",
+                note: "Assise sur la machine, pousse les poignées devant toi en tendant les bras. Alternative : pompes classiques au sol.",
+              },
+              {
+                name: "Face pull poulie / bande",
+                sets: "3 × 15",
+                rest: "45s",
+                img: "face_pull",
+                note: "Poulie à hauteur du visage ou élastique. Tire vers ton visage en écartant les mains, coudes hauts. Excellent pour la posture !",
+              },
+              {
+                name: "🎯 Pallof press (bande / poulie)",
+                sets: "3 × 10/côté",
+                rest: "45s",
+                img: "pallof",
+                note: "Debout de côté par rapport à la poulie/bande. Tiens la poignée contre ta poitrine, puis tends les bras devant toi sans tourner le buste. Résiste à la rotation.",
+              },
+              {
+                name: "🎯 Vacuum abdominal",
+                sets: "3 × 5 × 10s",
+                rest: "30s",
+                img: "vacuum",
+                note: "Debout ou à quatre pattes. Expire tout l'air, puis rentre le ventre au maximum comme pour toucher la colonne avec le nombril. Tiens 10s. Relâche.",
+              },
+            ],
+          },
+        ],
+      };
+
+      const CP2 = {
+        days: [
+          {
+            title: "Jour A — Charge Progressive",
+            timers: [45, 60, 75],
+            exercises: [
+              {
+                name: "Back squat (ou goblet lourd)",
+                sets: "4 × 10-12",
+                rest: "75s",
+                img: "back_squat",
+                note: "Barre sur les trapèzes ou haltère lourde contre la poitrine. Descends en squat, cuisses parallèles, remonte en poussant fort.",
+              },
+              {
+                name: "Fentes marchées haltères",
+                sets: "3 × 10/jambe",
+                rest: "60s",
+                img: "fentes",
+                note: "Grand pas en avant, genou arrière vers le sol. Pas long pour cibler davantage les fessiers. Alterne en avançant.",
+              },
+              {
+                name: "Hip thrust barre ou machine",
+                sets: "4 × 10-12",
+                rest: "75s",
+                img: "hip_thrust",
+                note: "Dos sur le banc, barre sur les hanches avec un coussin. Pousse les hanches vers le haut, serre les fessiers en haut. Charge progressive.",
+              },
+              {
+                name: "Développé couché haltères",
+                sets: "3 × 10-12",
+                rest: "60s",
+                tempo: "3-0-1-0",
+                img: "dev_couche",
+                note: "Allongée, descente lente 3 secondes, poussée dynamique vers le haut.",
+              },
+              {
+                name: "Rowing barre ou TRX",
+                sets: "3 × 10-12",
+                rest: "60s",
+                img: "rowing_barre",
+                note: "Penchée, tire la barre vers le nombril en serrant les omoplates. Au TRX : tire ton corps vers les poignées.",
+              },
+              {
+                name: "🎯 Dead bug + charge",
+                sets: "3 × 8/côté",
+                rest: "45s",
+                img: "dead_bug",
+                note: "Même exercice que le dead bug mais en tenant un petit haltère dans les mains. Augmente la difficulté pour le transverse.",
+              },
+              {
+                name: "🎯 Planche latérale",
+                sets: "3 × 20-30s/côté",
+                rest: "45s",
+                img: "planche_laterale",
+                note: "Sur le côté, en appui sur un coude. Hanche décollée du sol, corps aligné. Travaille le transverse et la taille.",
+              },
+            ],
+          },
+          {
+            title: "Jour B — Supersets & Fessiers",
+            timers: [30, 45, 60, 75],
+            exercises: [
+              {
+                name: "Soulevé de terre roumain barre",
+                sets: "4 × 10-12",
+                rest: "75s",
+                img: "rdl",
+                note: "Barre devant les cuisses, descends en poussant les fesses en arrière. Garde le dos droit et sens l'étirement derrière les cuisses.",
+              },
+              {
+                name: "Leg press (pieds hauts)",
+                sets: "4 × 10-12",
+                rest: "75s",
+                img: "leg_press",
+                note: "Pieds placés en haut de la plateforme pour cibler fessiers et ischio-jambiers.",
+              },
+              {
+                name: "Abducteurs machine",
+                sets: "3 × 15-20",
+                rest: "45s",
+                img: "abducteurs",
+                note: "Assise sur la machine, écarte les cuisses contre la résistance. Serre les fessiers. Excellent burn-out pour finir les fessiers.",
+              },
+              {
+                name: "Dév. épaules + élév. lat.",
+                sets: "3 × 10+12",
+                rest: "60s",
+                tempo: "Superset",
+                img: "dev_epaules",
+                note: "SUPERSET : 10 développés épaules puis directement 12 élévations latérales sans repos entre les deux.",
+              },
+              {
+                name: "Curl biceps + ext. triceps",
+                sets: "3 × 12+12",
+                rest: "60s",
+                tempo: "Superset",
+                img: "curl",
+                note: "SUPERSET : 12 curls biceps puis immédiatement 12 extensions triceps. Repos seulement après les deux.",
+              },
+              {
+                name: "🎯 Mountain climbers lents",
+                sets: "3 × 12/côté",
+                rest: "45s",
+                img: "mountain_climbers",
+                note: "En position de pompe, ramène un genou vers la poitrine lentement, puis alterne. Lenteur = plus de travail du transverse.",
+              },
+              {
+                name: "🎯 Vacuum abdominal avancé",
+                sets: "3 × 5 × 15s",
+                rest: "30s",
+                img: "vacuum",
+                note: "À quatre pattes, expire et rentre le ventre au maximum. Tiens 15 secondes. Relâche et recommence 5 fois.",
+              },
+            ],
+          },
+          {
+            title: "Jour C — Équilibre & Finition",
+            timers: [45, 60, 75],
+            exercises: [
+              {
+                name: "Squat bulgare haltères",
+                sets: "3 × 10/jambe",
+                rest: "75s",
+                img: "squat_bulgare",
+                note: "Pied arrière posé sur un banc derrière toi. Descends sur la jambe avant en pliant le genou, remonte. Super efficace pour les fessiers.",
+              },
+              {
+                name: "Hip thrust unilatéral",
+                sets: "3 × 10/jambe",
+                rest: "60s",
+                img: "hip_thrust",
+                note: "Même position que le hip thrust mais un pied levé. Pousse avec une seule jambe. Sans charge ou avec charge légère.",
+              },
+              {
+                name: "Leg curl allongé",
+                sets: "3 × 12-15",
+                rest: "60s",
+                img: "leg_curl",
+                note: "Allongée face vers le bas sur la machine. Plie les jambes pour ramener le rouleau vers les fessiers, puis redescends lentement.",
+              },
+              {
+                name: "Rowing haltère + pompes",
+                sets: "3 × 10+10",
+                rest: "60s",
+                tempo: "Superset",
+                img: "rowing_haltere",
+                note: "SUPERSET : 10 rowings haltère puis 10 pompes classiques sans repos entre les deux.",
+              },
+              {
+                name: "Face pull + band pull-apart",
+                sets: "3 × 15+15",
+                rest: "45s",
+                tempo: "Superset",
+                img: "face_pull",
+                note: "SUPERSET : tire la corde vers le visage, puis écarte un élastique devant toi bras tendus. Excellent pour la posture.",
+              },
+              {
+                name: "🎯 Pallof press + rotation",
+                sets: "3 × 8/côté",
+                rest: "45s",
+                img: "pallof",
+                note: "Tends les bras devant toi face à la poulie/bande, puis tourne doucement le buste d'un côté en résistant à la rotation. Version avancée.",
+              },
+              {
+                name: "🎯 Circuit abdos 3 min",
+                sets: "2 tours",
+                rest: "60s",
+                img: "circuit_abdos",
+                note: "Dead bug 45s → Planche 45s → Vacuum 30s. Enchaîne les 3 sans repos. Repose 60s entre les tours.",
+              },
+            ],
+          },
+        ],
+      };
+
+      function renderApp(id, phases, hero, nutri) {
+        const c = document.getElementById(id);
+        let h = hero;
+        h += `<div class="phase-selector"><button class="phase-btn active" onclick="switchPhase('${id}',1,this)">Phase 1<span class="phase-label">${phases[0].l}</span></button><button class="phase-btn" onclick="switchPhase('${id}',2,this)">Phase 2<span class="phase-label">${phases[1].l}</span></button></div>`;
+        phases.forEach((p, pi) => {
+          h += `<div class="phase-content" id="${id}-phase-${pi + 1}" style="${pi > 0 ? "display:none" : ""}">`;
+          p.d.days.forEach((day, di) => {
+            h += `<div class="day-card${di === 0 ? " open" : ""}" data-day><div class="day-header" onclick="toggleDay(this)"><div><h3>${day.title}</h3><span class="day-tag">${day.exercises.length} exercices</span></div><span class="day-chevron">▾</span></div><div class="day-body">`;
+            day.exercises.forEach((ex) => {
+              h += `<div class="exercise"><div class="ex-top"><div class="ex-left" onclick="toggleDone(this.closest('.exercise'))"><div class="exercise-name">${ex.name}</div><div class="exercise-details"><span class="exercise-chip sets">${ex.sets}</span><span class="exercise-chip">${ex.rest} repos</span>${ex.tempo ? `<span class="exercise-chip">${ex.tempo}</span>` : ""}</div></div><div class="ex-btns">${videoBtn()}${ytBtn(ex.img)}</div></div><div class="exercise-note" onclick="toggleDone(this.closest('.exercise'))">${ex.note}</div>${videoWrap(ex.img)}${exTimerBtns(ex.rest)}<div class="ex-check">✓</div></div>`;
+            });
+            h += `</div></div>`;
+          });
+          h += `</div>`;
+        });
+        h += nutri;
+        c.innerHTML = h;
+      }
+
+      renderApp(
+        "app-laurent",
+        [
+          { l: "Ré-adaptation", d: LP1 },
+          { l: "Hypertrophie", d: LP2 },
+        ],
+        `<div class="hero"><div class="hero-label">Programme de Laurent</div><h2>Reprise &<br>Prise de Masse</h2><div class="hero-stats"><div class="hero-stat"><strong>3x</strong> / semaine</div><div class="hero-stat"><strong>12</strong> semaines</div><div class="hero-stat"><strong>Full Body</strong></div></div></div>`,
+        `<div class="info-section"><h3>📊 Nutrition — Prise de Masse</h3><div class="macro-grid"><div class="macro-item"><div class="macro-val">+300</div><div class="macro-label">kcal surplus / jour</div></div><div class="macro-item"><div class="macro-val">1.8-2.2g</div><div class="macro-label">protéines / kg</div></div><div class="macro-item"><div class="macro-val">0.8-1.2g</div><div class="macro-label">lipides / kg</div></div><div class="macro-item"><div class="macro-val">3L+</div><div class="macro-label">eau / jour</div></div></div></div><div class="info-section"><h3>💡 Tempo</h3><p><strong>Format : X-X-X-X</strong> = descente – pause bas – montée – pause haut</p><p>Ex: <strong>3-1-1-0</strong> = 3s descente, 1s pause, 1s montée, 0s pause</p></div>`,
+      );
+
+      renderApp(
+        "app-chamsia",
+        [
+          { l: "Reconnexion", d: CP1 },
+          { l: "Intensification", d: CP2 },
+        ],
+        `<div class="hero"><div class="hero-label">Programme de Chamsia</div><h2>Perte de Poids &<br>Tonification</h2><div class="hero-stats"><div class="hero-stat"><strong>3x</strong> / semaine</div><div class="hero-stat"><strong>59→52</strong> kg</div><div class="hero-stat"><strong>12</strong> semaines</div></div></div>`,
+        `<div class="info-section"><h3>📊 Nutrition — Perte de Poids</h3><p>Objectif : <strong>1 400 - 1 500 kcal / jour</strong> (déficit ~400-500 kcal)</p><div class="macro-grid"><div class="macro-item"><div class="macro-val">95-115g</div><div class="macro-label">protéines / jour</div></div><div class="macro-item"><div class="macro-val">50-60g</div><div class="macro-label">lipides / jour</div></div><div class="macro-item"><div class="macro-val">130-160g</div><div class="macro-label">glucides / jour</div></div><div class="macro-item"><div class="macro-val">2.5L</div><div class="macro-label">eau / jour</div></div></div></div><div class="info-section"><h3>🎯 Exercices ventre</h3><p>Les exercices marqués 🎯 ciblent le <strong>transverse</strong> et la gaine profonde post-grossesse. Ne les saute jamais !</p></div>`,
+      );
+
+      let timerInterval = null,
+        timerSeconds = 0;
+      function switchProfile(p) {
+        document
+          .querySelectorAll(".profile-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelector(`.profile-tab[data-profile="${p}"]`)
+          .classList.add("active");
+        document
+          .querySelectorAll(".app")
+          .forEach((a) => a.classList.remove("active"));
+        document.getElementById(`app-${p}`).classList.add("active");
+        const r = document.documentElement.style;
+        if (p === "laurent") {
+          r.setProperty("--accent", "var(--la)");
+          r.setProperty("--glow", "var(--lg)");
+        } else {
+          r.setProperty("--accent", "var(--ca)");
+          r.setProperty("--glow", "var(--cg)");
+        }
+      }
+      function switchPhase(id, phase, btn) {
+        const app = document.getElementById(id);
+        app
+          .querySelectorAll(".phase-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        app
+          .querySelectorAll(".phase-content")
+          .forEach((pc) => (pc.style.display = "none"));
+        document.getElementById(`${id}-phase-${phase}`).style.display = "block";
+      }
+      function toggleDay(h) {
+        h.closest(".day-card").classList.toggle("open");
+      }
+      function toggleDone(el) {
+        if (!el || el.closest(".rest-timers")) return;
+        el.classList.toggle("done");
+      }
+
+      // Audio beep using Web Audio API (works on iOS)
+      let audioCtx;
+      function playBeep() {
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.frequency.value = 880;
+          gain.gain.value = 0.3;
+          osc.start();
+          osc.stop(audioCtx.currentTime + 0.15);
+          setTimeout(() => {
+            const osc2 = audioCtx.createOscillator();
+            const gain2 = audioCtx.createGain();
+            osc2.connect(gain2);
+            gain2.connect(audioCtx.destination);
+            osc2.frequency.value = 1100;
+            gain2.gain.value = 0.3;
+            osc2.start();
+            osc2.stop(audioCtx.currentTime + 0.2);
+          }, 200);
+          setTimeout(() => {
+            const osc3 = audioCtx.createOscillator();
+            const gain3 = audioCtx.createGain();
+            osc3.connect(gain3);
+            gain3.connect(audioCtx.destination);
+            osc3.frequency.value = 1320;
+            gain3.gain.value = 0.3;
+            osc3.start();
+            osc3.stop(audioCtx.currentTime + 0.3);
+          }, 450);
+        } catch(e) {}
+      }
+
+      // Wake lock to keep screen on during timer
+      let wakeLock = null;
+      async function requestWakeLock() {
+        try {
+          if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen');
+          }
+        } catch(e) {}
+      }
+      function releaseWakeLock() {
+        if (wakeLock) { wakeLock.release(); wakeLock = null; }
+      }
+
+      // Request notification permission on first timer use
+      let notifAsked = false;
+      function askNotif() {
+        if (notifAsked) return;
+        notifAsked = true;
+        if ('Notification' in window && Notification.permission === 'default') {
+          Notification.requestPermission();
+        }
+      }
+      function sendNotif() {
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('Repos terminé !', { body: 'C\'est reparti 💪', icon: 'icon-192.png' });
+        }
+      }
+
+      function timerDone() {
+        document.getElementById("timer-display").classList.add("done");
+        if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
+        playBeep();
+        sendNotif();
+        releaseWakeLock();
+      }
+
+      function startTimer(s, e) {
+        if (e) e.stopPropagation();
+        clearInterval(timerInterval);
+        timerSeconds = s;
+        updT();
+        document.getElementById("timer-bar").classList.add("visible");
+        // Unlock audio on iOS (requires user gesture)
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        askNotif();
+        requestWakeLock();
+        timerInterval = setInterval(() => {
+          timerSeconds--;
+          updT();
+          if (timerSeconds <= 0) {
+            clearInterval(timerInterval);
+            timerDone();
+          }
+        }, 1000);
+      }
+      function addTime(s) {
+        timerSeconds += s;
+        updT();
+        document.getElementById("timer-display").classList.remove("done");
+        if (!timerInterval || timerSeconds > s) return;
+        requestWakeLock();
+        timerInterval = setInterval(() => {
+          timerSeconds--;
+          updT();
+          if (timerSeconds <= 0) {
+            clearInterval(timerInterval);
+            timerDone();
+          }
+        }, 1000);
+      }
+      function stopTimer() {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        document.getElementById("timer-bar").classList.remove("visible");
+        document
+          .getElementById("timer-display")
+          .classList.remove("done", "warning");
+        releaseWakeLock();
+      }
+      function updT() {
+        const d = document.getElementById("timer-display"),
+          m = Math.floor(Math.abs(timerSeconds) / 60),
+          s = Math.abs(timerSeconds) % 60;
+        d.textContent = `${timerSeconds < 0 ? "-" : ""}${m}:${s.toString().padStart(2, "0")}`;
+        d.classList.remove("warning", "done");
+        if (timerSeconds <= 5 && timerSeconds > 0) d.classList.add("warning");
+        if (timerSeconds <= 0) d.classList.add("done");
+      }
+      setTimeout(() => {
+        const sp = document.querySelector(".splash");
+        if (sp) sp.remove();
+      }, 2500);
+
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js");
+      }
+    </script>
+  </body>
+</html>
