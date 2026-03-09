@@ -1,4 +1,4 @@
-const CACHE = "gym-v4";
+const CACHE = "gym-v5";
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,6 +6,8 @@ const ASSETS = [
   "./icon-512.png",
   "./apple-touch-icon.png",
   "./manifest.json",
+  "./programme_musculation.pdf",
+  "./programme_tonification.pdf",
 ];
 
 self.addEventListener("install", (e) => {

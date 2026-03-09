@@ -500,6 +500,372 @@
         color: var(--text-dim);
         margin-top: 2px;
       }
+      .pdf-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding: 0.65rem 1.1rem;
+        border-radius: 10px;
+        background: var(--glow);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        font-family: "DM Sans", sans-serif;
+        transition: all 0.2s;
+      }
+      .pdf-link:active {
+        background: var(--accent);
+        color: #fff;
+      }
+      .meal-list {
+        margin-top: 0.75rem;
+      }
+      .meal-item {
+        background: var(--surface2);
+        border-radius: 10px;
+        padding: 0.75rem 0.9rem;
+        margin-bottom: 0.5rem;
+      }
+      .meal-item .meal-title {
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: var(--text);
+        margin-bottom: 0.3rem;
+      }
+      .meal-item .meal-desc {
+        font-size: 0.78rem;
+        color: var(--text-dim);
+        line-height: 1.5;
+      }
+      .food-table-section {
+        margin: 1.25rem 1rem;
+        border-radius: 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        overflow: hidden;
+      }
+      .food-table-header {
+        padding: 1rem 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        user-select: none;
+      }
+      .food-table-header h3 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: 0.04em;
+        color: var(--accent);
+        margin: 0;
+      }
+      .food-table-chevron {
+        transition: transform 0.3s;
+        font-size: 1.2rem;
+        color: var(--text-dim);
+      }
+      .food-table-section.open .food-table-chevron {
+        transform: rotate(180deg);
+      }
+      .food-table-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      .food-table-section.open .food-table-body {
+        max-height: 50000px;
+      }
+      .food-cat {
+        padding: 0.5rem 1rem;
+        font-weight: 700;
+        font-size: 0.85rem;
+        background: var(--surface2);
+        border-top: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+      .food-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0.3rem;
+        padding: 0.55rem 1rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.78rem;
+        align-items: start;
+      }
+      .food-row:active {
+        background: var(--surface2);
+      }
+      .food-name {
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1.3;
+      }
+      .food-note {
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        line-height: 1.3;
+        margin-top: 1px;
+      }
+      .food-macros {
+        display: flex;
+        gap: 0.3rem;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        flex-shrink: 0;
+      }
+      .food-macro {
+        font-size: 0.68rem;
+        padding: 0.15rem 0.4rem;
+        border-radius: 5px;
+        white-space: nowrap;
+        font-weight: 500;
+      }
+      .food-macro.kcal {
+        background: var(--glow);
+        color: var(--accent);
+      }
+      .food-macro.prot {
+        background: rgba(52, 211, 153, 0.15);
+        color: var(--green);
+      }
+      .food-macro.gluc {
+        background: rgba(251, 191, 36, 0.15);
+        color: var(--yellow);
+      }
+      .food-macro.lip {
+        background: rgba(232, 99, 122, 0.15);
+        color: var(--ca);
+      }
+      .food-search {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        color: var(--text);
+        font-size: 0.85rem;
+        font-family: "DM Sans", sans-serif;
+        outline: none;
+      }
+      .food-search::placeholder {
+        color: var(--text-dim);
+      }
+      .food-row.hidden {
+        display: none;
+      }
+      .food-cat.hidden {
+        display: none;
+      }
+      .nutri-tip {
+        font-size: 0.82rem;
+        color: var(--text-dim);
+        line-height: 1.6;
+        padding: 0.6rem 0.8rem;
+        background: var(--surface2);
+        border-radius: 10px;
+        margin-top: 0.5rem;
+        border-left: 3px solid var(--accent);
+      }
+
+      .cal-tracker {
+        margin: 1.25rem 1rem;
+        border-radius: 14px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        overflow: hidden;
+      }
+      .cal-tracker-header {
+        padding: 1rem 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        user-select: none;
+      }
+      .cal-tracker-header h3 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: 0.04em;
+        color: var(--accent);
+        margin: 0;
+      }
+      .cal-tracker-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease;
+      }
+      .cal-tracker.open .cal-tracker-body {
+        max-height: 5000px;
+      }
+      .cal-tracker.open .food-table-chevron {
+        transform: rotate(180deg);
+      }
+      .cal-month-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.6rem 1rem;
+        border-top: 1px solid var(--border);
+      }
+      .cal-month-nav button {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        border-radius: 8px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+      }
+      .cal-month-name {
+        font-weight: 700;
+        font-size: 0.95rem;
+        text-transform: capitalize;
+      }
+      .cal-weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        padding: 0.3rem 0.6rem;
+        gap: 2px;
+      }
+      .cal-weekday {
+        text-align: center;
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: var(--text-dim);
+        padding: 0.3rem 0;
+      }
+      .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        padding: 0 0.6rem 0.6rem;
+        gap: 2px;
+      }
+      .cal-day {
+        aspect-ratio: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+        position: relative;
+        background: var(--surface2);
+        color: var(--text-dim);
+        border: 2px solid transparent;
+      }
+      .cal-day.empty {
+        background: transparent;
+        cursor: default;
+      }
+      .cal-day.today {
+        border-color: var(--accent);
+      }
+      .cal-day.has-data {
+        color: var(--text);
+      }
+      .cal-day.good {
+        background: rgba(52, 211, 153, 0.15);
+        color: var(--green);
+      }
+      .cal-day.over {
+        background: rgba(232, 99, 122, 0.15);
+        color: var(--ca);
+      }
+      .cal-day .cal-day-num {
+        font-size: 0.75rem;
+        line-height: 1;
+      }
+      .cal-day .cal-day-kcal {
+        font-size: 0.55rem;
+        font-weight: 500;
+        line-height: 1;
+        margin-top: 1px;
+      }
+      .cal-day-input {
+        border-top: 1px solid var(--border);
+        padding: 0.8rem 1rem;
+        display: none;
+      }
+      .cal-day-input.active {
+        display: block;
+      }
+      .cal-day-input label {
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        display: block;
+        margin-bottom: 0.4rem;
+      }
+      .cal-day-input label strong {
+        color: var(--text);
+      }
+      .cal-input-row {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      .cal-input-row input {
+        flex: 1;
+        padding: 0.6rem 0.8rem;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        font-size: 1rem;
+        font-family: "DM Sans", sans-serif;
+        outline: none;
+        -moz-appearance: textfield;
+        appearance: textfield;
+      }
+      .cal-input-row input::-webkit-inner-spin-button { -webkit-appearance: none; }
+      .cal-input-row input:focus {
+        border-color: var(--accent);
+      }
+      .cal-input-row button {
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        border: none;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        font-family: "DM Sans", sans-serif;
+      }
+      .cal-summary {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.6rem 1rem;
+        border-top: 1px solid var(--border);
+        flex-wrap: wrap;
+      }
+      .cal-summary-item {
+        flex: 1;
+        min-width: 80px;
+        background: var(--surface2);
+        border-radius: 8px;
+        padding: 0.5rem;
+        text-align: center;
+      }
+      .cal-summary-item .cal-s-val {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.3rem;
+        color: var(--accent);
+      }
+      .cal-summary-item .cal-s-label {
+        font-size: 0.65rem;
+        color: var(--text-dim);
+      }
 
       .rest-timers {
         display: flex;
@@ -1468,6 +1834,233 @@
         ],
       };
 
+      const FOODS = [
+        {cat:"🥩 Protéines Animales", items:[
+          {n:"Blanc de poulet (cuit)",k:165,p:31,g:0,l:3.6,t:"Top protéine maigre"},
+          {n:"Cuisse de poulet (cuite)",k:209,p:26,g:0,l:11,t:"Plus de goût, un peu plus gras"},
+          {n:"Steak de bœuf 5%",k:137,p:22,g:0,l:5,t:"Maigre, riche en fer"},
+          {n:"Bœuf haché 15%",k:250,p:26,g:0,l:15,t:"Plus calorique"},
+          {n:"Filet de saumon",k:208,p:20,g:0,l:13,t:"Oméga-3, excellent gras"},
+          {n:"Filet de cabillaud",k:82,p:18,g:0,l:0.7,t:"Ultra maigre"},
+          {n:"Thon en boîte (nature)",k:116,p:26,g:0,l:1,t:"Pratique, pas cher"},
+          {n:"Crevettes",k:99,p:24,g:0,l:0.3,t:"Ultra maigre et protéiné"},
+          {n:"Œuf entier",k:155,p:13,g:1.1,l:11,t:"Protéine complète"},
+          {n:"Blanc d'œuf",k:52,p:11,g:0.7,l:0.2,t:"Quasi 100% protéine"},
+          {n:"Jambon blanc dégraissé",k:107,p:18,g:1.5,l:3,t:"Snack rapide"},
+          {n:"Dinde (escalope)",k:135,p:30,g:0,l:1.5,t:"Très maigre"},
+        ]},
+        {cat:"🍚 Féculents & Céréales", items:[
+          {n:"Riz blanc (cuit)",k:130,p:2.7,g:28,l:0.3,t:"Base glucidique classique"},
+          {n:"Riz complet (cuit)",k:123,p:2.7,g:26,l:1,t:"Plus de fibres"},
+          {n:"Pâtes (cuites)",k:131,p:5,g:25,l:1.1,t:"Source d'énergie"},
+          {n:"Pâtes complètes (cuites)",k:124,p:5.3,g:23,l:1,t:"Plus rassasiantes"},
+          {n:"Quinoa (cuit)",k:120,p:4.4,g:21,l:1.9,t:"Protéine végétale complète"},
+          {n:"Patate douce (cuite)",k:86,p:1.6,g:20,l:0.1,t:"IG modéré, bon pour l'énergie"},
+          {n:"Pomme de terre (cuite)",k:87,p:1.9,g:20,l:0.1,t:"Très rassasiante"},
+          {n:"Flocons d'avoine (sec)",k:367,p:14,g:60,l:7,t:"Petit-déj idéal (40-80g)"},
+          {n:"Pain complet",k:247,p:9,g:43,l:3.4,t:"Préférer au pain blanc"},
+          {n:"Boulgour (cuit)",k:83,p:3,g:18,l:0.2,t:"Alternative au riz"},
+          {n:"Lentilles (cuites)",k:116,p:9,g:20,l:0.4,t:"Protéines + fibres"},
+          {n:"Pois chiches (cuits)",k:164,p:9,g:27,l:2.6,t:"Protéines végétales"},
+          {n:"Haricots rouges (cuits)",k:127,p:9,g:23,l:0.5,t:"Fibres + protéines"},
+        ]},
+        {cat:"🥑 Lipides & Oléagineux", items:[
+          {n:"Amandes",k:579,p:21,g:10,l:50,t:"~15 amandes = 20g"},
+          {n:"Noix",k:654,p:15,g:14,l:65,t:"Oméga-3 végétaux"},
+          {n:"Cacahuètes",k:567,p:26,g:16,l:49,t:"Bonne source protéines"},
+          {n:"Beurre de cacahuète",k:588,p:25,g:20,l:50,t:"1 cuillère = ~15g"},
+          {n:"Avocat",k:160,p:2,g:9,l:15,t:"Bon gras + fibres"},
+          {n:"Huile d'olive (1 c.s.)",k:130,p:0,g:0,l:15,t:"1 cuillère soupe = ~15ml"},
+          {n:"Graines de chia",k:486,p:17,g:42,l:31,t:"Oméga-3 + fibres"},
+          {n:"Noisettes",k:628,p:15,g:17,l:61,t:"Vitamine E"},
+          {n:"Olives noires",k:115,p:0.8,g:6,l:11,t:"Apéro sain"},
+        ]},
+        {cat:"🥦 Légumes", items:[
+          {n:"Brocoli",k:34,p:2.8,g:7,l:0.4,t:"Riche en vitamines"},
+          {n:"Épinards",k:23,p:2.9,g:3.6,l:0.4,t:"Fer + magnésium"},
+          {n:"Courgette",k:17,p:1.2,g:3.1,l:0.3,t:"Ultra light"},
+          {n:"Haricots verts",k:31,p:1.8,g:7,l:0.1,t:"Fibres + satiété"},
+          {n:"Tomate",k:18,p:0.9,g:3.9,l:0.2,t:"Lycopène"},
+          {n:"Concombre",k:15,p:0.7,g:3.6,l:0.1,t:"Hydratation"},
+          {n:"Poivron rouge",k:31,p:1,g:6,l:0.3,t:"Vitamine C"},
+          {n:"Carotte",k:41,p:0.9,g:10,l:0.2,t:"Bêta-carotène"},
+          {n:"Champignons",k:22,p:3.1,g:3.3,l:0.3,t:"Quasi pas de calories"},
+          {n:"Salade verte",k:15,p:1.4,g:2.9,l:0.2,t:"Volume sans calories"},
+          {n:"Chou-fleur",k:25,p:2,g:5,l:0.3,t:"Substitut riz possible"},
+          {n:"Aubergine",k:25,p:1,g:6,l:0.2,t:"Absorbe les saveurs"},
+        ]},
+        {cat:"🥛 Produits Laitiers", items:[
+          {n:"Fromage blanc 0%",k:45,p:7.5,g:4,l:0.2,t:"Dessert protéiné top"},
+          {n:"Yaourt grec 0%",k:59,p:10,g:3.6,l:0.4,t:"Protéiné !"},
+          {n:"Skyr",k:63,p:11,g:4,l:0.2,t:"Ultra protéiné"},
+          {n:"Yaourt nature",k:61,p:3.5,g:5,l:3,t:"Probiotiques"},
+          {n:"Cottage cheese",k:98,p:11,g:3,l:4,t:"Bonne option protéine"},
+          {n:"Mozzarella",k:280,p:22,g:2,l:21,t:"Avec modération"},
+          {n:"Emmental",k:380,p:27,g:0,l:30,t:"Très calorique"},
+        ]},
+        {cat:"🍎 Fruits", items:[
+          {n:"Banane",k:89,p:1.1,g:23,l:0.3,t:"Énergie pré-entraînement"},
+          {n:"Pomme",k:52,p:0.3,g:14,l:0.2,t:"Satiété (fibres)"},
+          {n:"Orange",k:47,p:0.9,g:12,l:0.1,t:"Vitamine C"},
+          {n:"Fraises",k:33,p:0.7,g:8,l:0.3,t:"Peu caloriques"},
+          {n:"Myrtilles",k:57,p:0.7,g:14,l:0.3,t:"Antioxydants"},
+          {n:"Kiwi",k:61,p:1.1,g:15,l:0.5,t:"Vitamine C + digestion"},
+          {n:"Raisin",k:69,p:0.7,g:18,l:0.2,t:"Plus sucré"},
+          {n:"Dattes séchées",k:277,p:1.8,g:75,l:0.2,t:"Max 2-3"},
+        ]},
+        {cat:"🥤 Snacks & Compléments", items:[
+          {n:"Whey (1 scoop ~30g)",k:120,p:24,g:2,l:1.5,t:"Post-entraînement"},
+          {n:"Barre protéinée (~60g)",k:220,p:20,g:22,l:8,t:"Variable selon marques"},
+          {n:"Galettes de riz",k:387,p:7,g:84,l:2.8,t:"IG élevé, collation rapide"},
+          {n:"Chocolat noir 70%",k:598,p:8,g:33,l:43,t:"2 carrés = ~40kcal"},
+          {n:"Miel (1 c.s. ~20g)",k:60,p:0,g:16,l:0,t:"Énergie rapide"},
+          {n:"Compote sans sucre",k:40,p:0.3,g:10,l:0.1,t:"Dessert léger"},
+        ]},
+      ];
+
+      function buildFoodTable() {
+        let h = '<div class="food-table-section" id="food-table"><div class="food-table-header" onclick="this.parentElement.classList.toggle(\'open\')"><h3>🥗 Table des Calories</h3><span class="food-table-chevron">▾</span></div><div class="food-table-body">';
+        h += '<input class="food-search" type="search" placeholder="🔍 Rechercher un aliment…" oninput="filterFoods(this.value)">';
+        h += '<div style="padding:0.5rem 1rem;font-size:0.7rem;color:var(--text-dim)">Valeurs pour 100g sauf indication</div>';
+        FOODS.forEach((cat, ci) => {
+          h += `<div class="food-cat" data-cat="${ci}">${cat.cat}</div>`;
+          cat.items.forEach(f => {
+            h += `<div class="food-row" data-cat="${ci}" data-search="${f.n.toLowerCase()}"><div><div class="food-name">${f.n}</div>${f.t ? `<div class="food-note">${f.t}</div>` : ''}</div><div class="food-macros"><span class="food-macro kcal">${f.k}</span><span class="food-macro prot">${f.p}P</span><span class="food-macro gluc">${f.g}G</span><span class="food-macro lip">${f.l}L</span></div></div>`;
+          });
+        });
+        h += '</div></div>';
+        return h;
+      }
+
+      function filterFoods(q) {
+        const query = q.toLowerCase().trim();
+        const rows = document.querySelectorAll('#food-table .food-row');
+        const cats = document.querySelectorAll('#food-table .food-cat');
+        const visible = new Set();
+        rows.forEach(r => {
+          const match = !query || r.dataset.search.includes(query);
+          r.classList.toggle('hidden', !match);
+          if (match) visible.add(r.dataset.cat);
+        });
+        cats.forEach(c => c.classList.toggle('hidden', query && !visible.has(c.dataset.cat)));
+      }
+
+      // Calorie Tracker
+      const CAL_KEY = 'gym_cal_tracker';
+      let calMonth, calYear, calSelected = null;
+
+      function getCalData() {
+        try { return JSON.parse(localStorage.getItem(CAL_KEY)) || {}; } catch(e) { return {}; }
+      }
+      function saveCalData(data) {
+        localStorage.setItem(CAL_KEY, JSON.stringify(data));
+      }
+      function calKey(y, m, d) {
+        return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      }
+      function initCal() {
+        const now = new Date();
+        calMonth = now.getMonth();
+        calYear = now.getFullYear();
+        renderCal();
+      }
+      function changeMonth(dir) {
+        calMonth += dir;
+        if (calMonth < 0) { calMonth = 11; calYear--; }
+        if (calMonth > 11) { calMonth = 0; calYear++; }
+        calSelected = null;
+        renderCal();
+      }
+      function renderCal() {
+        const el = document.getElementById('cal-grid');
+        const nameEl = document.getElementById('cal-month-name');
+        const inputEl = document.getElementById('cal-day-input');
+        if (!el) return;
+        const data = getCalData();
+        const now = new Date();
+        const today = now.getDate(), todayM = now.getMonth(), todayY = now.getFullYear();
+        const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+        nameEl.textContent = `${months[calMonth]} ${calYear}`;
+
+        const firstDay = new Date(calYear, calMonth, 1).getDay();
+        const offset = firstDay === 0 ? 6 : firstDay - 1; // Monday start
+        const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+        let h = '';
+        for (let i = 0; i < offset; i++) h += '<div class="cal-day empty"></div>';
+        for (let d = 1; d <= daysInMonth; d++) {
+          const key = calKey(calYear, calMonth, d);
+          const val = data[key];
+          const isToday = d === today && calMonth === todayM && calYear === todayY;
+          const isSel = calSelected === d;
+          let cls = 'cal-day';
+          if (isToday) cls += ' today';
+          if (val !== undefined) {
+            cls += ' has-data';
+            if (val <= 1400) cls += ' good';
+            else cls += ' over';
+          }
+          if (isSel) cls += ' today'; // reuse border style
+          h += `<div class="${cls}" onclick="selectCalDay(${d})"><span class="cal-day-num">${d}</span>${val !== undefined ? `<span class="cal-day-kcal">${val}</span>` : ''}</div>`;
+        }
+        el.innerHTML = h;
+
+        // Input area
+        if (calSelected) {
+          const key = calKey(calYear, calMonth, calSelected);
+          const val = data[key];
+          inputEl.className = 'cal-day-input active';
+          inputEl.innerHTML = `<label><strong>${calSelected} ${months[calMonth]}</strong> — Calories consommées</label><div class="cal-input-row"><input type="number" id="cal-input-val" inputmode="numeric" placeholder="ex: 1420" value="${val !== undefined ? val : ''}"><button onclick="saveCalDay()">OK</button><button style="background:var(--surface2);color:var(--text-dim);border:1px solid var(--border)" onclick="deleteCalDay()">✕</button></div>`;
+        } else {
+          inputEl.className = 'cal-day-input';
+          inputEl.innerHTML = '';
+        }
+
+        // Monthly summary
+        renderCalSummary(data);
+      }
+      function selectCalDay(d) {
+        calSelected = calSelected === d ? null : d;
+        renderCal();
+        if (calSelected) {
+          setTimeout(() => { const inp = document.getElementById('cal-input-val'); if (inp) inp.focus(); }, 100);
+        }
+      }
+      function saveCalDay() {
+        const inp = document.getElementById('cal-input-val');
+        if (!inp || !calSelected) return;
+        const val = parseInt(inp.value);
+        if (isNaN(val) || val < 0) return;
+        const data = getCalData();
+        data[calKey(calYear, calMonth, calSelected)] = val;
+        saveCalData(data);
+        calSelected = null;
+        renderCal();
+      }
+      function deleteCalDay() {
+        if (!calSelected) return;
+        const data = getCalData();
+        delete data[calKey(calYear, calMonth, calSelected)];
+        saveCalData(data);
+        calSelected = null;
+        renderCal();
+      }
+      function renderCalSummary(data) {
+        const el = document.getElementById('cal-summary');
+        if (!el) return;
+        const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+        let total = 0, count = 0, good = 0;
+        for (let d = 1; d <= daysInMonth; d++) {
+          const val = data[calKey(calYear, calMonth, d)];
+          if (val !== undefined) { total += val; count++; if (val <= 1400) good++; }
+        }
+        const avg = count ? Math.round(total / count) : '—';
+        el.innerHTML = `<div class="cal-summary-item"><div class="cal-s-val">${count}</div><div class="cal-s-label">jours saisis</div></div><div class="cal-summary-item"><div class="cal-s-val">${avg}</div><div class="cal-s-label">moy. kcal/j</div></div><div class="cal-summary-item"><div class="cal-s-val">${good}/${count || 0}</div><div class="cal-s-label">jours ≤ 1400</div></div>`;
+      }
+      function buildCalTracker() {
+        return `<div class="cal-tracker" id="cal-tracker"><div class="cal-tracker-header" onclick="this.parentElement.classList.toggle('open')"><h3>📅 Suivi Calories</h3><span class="food-table-chevron">▾</span></div><div class="cal-tracker-body"><div class="cal-month-nav"><button onclick="changeMonth(-1)">◂</button><span class="cal-month-name" id="cal-month-name"></span><button onclick="changeMonth(1)">▸</button></div><div class="cal-weekdays"><span class="cal-weekday">Lun</span><span class="cal-weekday">Mar</span><span class="cal-weekday">Mer</span><span class="cal-weekday">Jeu</span><span class="cal-weekday">Ven</span><span class="cal-weekday">Sam</span><span class="cal-weekday">Dim</span></div><div class="cal-grid" id="cal-grid"></div><div class="cal-day-input" id="cal-day-input"></div><div class="cal-summary" id="cal-summary"></div></div></div>`;
+      }
+
       function renderApp(id, phases, hero, nutri) {
         const c = document.getElementById(id);
         let h = hero;
@@ -1493,8 +2086,8 @@
           { l: "Ré-adaptation", d: LP1 },
           { l: "Hypertrophie", d: LP2 },
         ],
-        `<div class="hero"><div class="hero-label">Programme de Laurent</div><h2>Reprise &<br>Prise de Masse</h2><div class="hero-stats"><div class="hero-stat"><strong>3x</strong> / semaine</div><div class="hero-stat"><strong>12</strong> semaines</div><div class="hero-stat"><strong>Full Body</strong></div></div></div>`,
-        `<div class="info-section"><h3>📊 Nutrition — Prise de Masse</h3><div class="macro-grid"><div class="macro-item"><div class="macro-val">+300</div><div class="macro-label">kcal surplus / jour</div></div><div class="macro-item"><div class="macro-val">1.8-2.2g</div><div class="macro-label">protéines / kg</div></div><div class="macro-item"><div class="macro-val">0.8-1.2g</div><div class="macro-label">lipides / kg</div></div><div class="macro-item"><div class="macro-val">3L+</div><div class="macro-label">eau / jour</div></div></div></div><div class="info-section"><h3>💡 Tempo</h3><p><strong>Format : X-X-X-X</strong> = descente – pause bas – montée – pause haut</p><p>Ex: <strong>3-1-1-0</strong> = 3s descente, 1s pause, 1s montée, 0s pause</p></div>`,
+        `<div class="hero"><div class="hero-label">Programme de Laurent</div><h2>Reprise &<br>Prise de Masse</h2><div class="hero-stats"><div class="hero-stat"><strong>3x</strong> / semaine</div><div class="hero-stat"><strong>12</strong> semaines</div><div class="hero-stat"><strong>Full Body</strong></div></div><a class="pdf-link" href="programme_musculation.pdf" target="_blank">📄 Programme PDF complet</a></div>`,
+        `<div class="info-section"><h3>📊 Nutrition — Prise de Masse</h3><p>Objectif : <strong>~2 500 - 2 700 kcal / jour</strong> (surplus de +300 kcal)</p><div class="macro-grid"><div class="macro-item"><div class="macro-val">2 500+</div><div class="macro-label">kcal / jour</div></div><div class="macro-item"><div class="macro-val">150-180g</div><div class="macro-label">protéines / jour</div></div><div class="macro-item"><div class="macro-val">70-90g</div><div class="macro-label">lipides / jour</div></div><div class="macro-item"><div class="macro-val">300-350g</div><div class="macro-label">glucides / jour</div></div><div class="macro-item"><div class="macro-val">1.8-2.2g</div><div class="macro-label">protéines / kg</div></div><div class="macro-item"><div class="macro-val">3L+</div><div class="macro-label">eau / jour</div></div></div><h3 style="margin-top:1.2rem">🍽 Exemple de répartition</h3><div class="meal-list"><div class="meal-item"><div class="meal-title">☀️ Petit-déjeuner</div><div class="meal-desc">Flocons d'avoine (80g) + banane + beurre de cacahuète (15g) + 3 œufs brouillés<br><em>~650 kcal · 35g prot</em></div></div><div class="meal-item"><div class="meal-title">🥗 Déjeuner</div><div class="meal-desc">Riz (150g cru) + poulet grillé (200g) + légumes + huile d'olive<br><em>~750 kcal · 50g prot</em></div></div><div class="meal-item"><div class="meal-title">🍌 Collation pré-training</div><div class="meal-desc">Banane + poignée d'amandes (30g) + fromage blanc (150g)<br><em>~350 kcal · 20g prot</em></div></div><div class="meal-item"><div class="meal-title">💪 Post-training</div><div class="meal-desc">Whey (30g) + flocons d'avoine (40g) + miel<br><em>~350 kcal · 30g prot</em></div></div><div class="meal-item"><div class="meal-title">🌙 Dîner</div><div class="meal-desc">Pâtes complètes (120g cru) + saumon (150g) + légumes verts<br><em>~650 kcal · 40g prot</em></div></div></div><div class="nutri-tip">💡 <strong>Priorité protéines :</strong> vise au moins 30g de protéines par repas. Les jours de repos, réduis légèrement les glucides (-50g) et augmente les légumes.</div></div><div class="info-section"><h3>💡 Tempo</h3><p><strong>Format : X-X-X-X</strong> = descente – pause bas – montée – pause haut</p><p>Ex: <strong>3-1-1-0</strong> = 3s descente, 1s pause, 1s montée, 0s pause</p></div>`,
       );
 
       renderApp(
@@ -1503,9 +2096,11 @@
           { l: "Reconnexion", d: CP1 },
           { l: "Intensification", d: CP2 },
         ],
-        `<div class="hero"><div class="hero-label">Programme de Chamsia</div><h2>Perte de Poids &<br>Tonification</h2><div class="hero-stats"><div class="hero-stat"><strong>3x</strong> / semaine</div><div class="hero-stat"><strong>59→52</strong> kg</div><div class="hero-stat"><strong>12</strong> semaines</div></div></div>`,
-        `<div class="info-section"><h3>📊 Nutrition — Perte de Poids</h3><p>Objectif : <strong>1 400 - 1 500 kcal / jour</strong> (déficit ~400-500 kcal)</p><div class="macro-grid"><div class="macro-item"><div class="macro-val">95-115g</div><div class="macro-label">protéines / jour</div></div><div class="macro-item"><div class="macro-val">50-60g</div><div class="macro-label">lipides / jour</div></div><div class="macro-item"><div class="macro-val">130-160g</div><div class="macro-label">glucides / jour</div></div><div class="macro-item"><div class="macro-val">2.5L</div><div class="macro-label">eau / jour</div></div></div></div><div class="info-section"><h3>🎯 Exercices ventre</h3><p>Les exercices marqués 🎯 ciblent le <strong>transverse</strong> et la gaine profonde post-grossesse. Ne les saute jamais !</p></div>`,
+        `<div class="hero"><div class="hero-label">Programme de Chamsia</div><h2>Perte de Poids &<br>Tonification</h2><div class="hero-stats"><div class="hero-stat"><strong>3x</strong> / semaine</div><div class="hero-stat"><strong>1m56</strong> · 59→52 kg</div><div class="hero-stat"><strong>12</strong> semaines</div></div><a class="pdf-link" href="programme_tonification.pdf" target="_blank">📄 Programme PDF complet</a></div>`,
+        `<div class="info-section"><h3>📊 Nutrition — Perte de Poids</h3><p>Objectif : <strong>1 300 - 1 400 kcal / jour</strong> (déficit ~400-500 kcal)<br><span style="font-size:0.8rem;color:var(--text-dim)">Maintien estimé : ~1 750-1 800 kcal/j (34 ans, 1m56, 59 kg, activité modérée)</span></p><div class="macro-grid"><div class="macro-item"><div class="macro-val">1 300-1 400</div><div class="macro-label">kcal / jour</div></div><div class="macro-item"><div class="macro-val">95-115g</div><div class="macro-label">protéines / jour</div></div><div class="macro-item"><div class="macro-val">47-55g</div><div class="macro-label">lipides / jour</div></div><div class="macro-item"><div class="macro-val">100-130g</div><div class="macro-label">glucides / jour MAX</div></div><div class="macro-item"><div class="macro-val">25-30g</div><div class="macro-label">fibres / jour</div></div><div class="macro-item"><div class="macro-val">2.5L</div><div class="macro-label">eau / jour</div></div></div><h3 style="margin-top:1.2rem">🍽 Exemple de journée type (~1 350 kcal)</h3><div class="meal-list"><div class="meal-item"><div class="meal-title">☀️ Petit-déjeuner (~300 kcal)</div><div class="meal-desc">2 œufs brouillés + 1 tranche pain complet + 100g fromage blanc 0%<br><em>~28g prot · 20g glucides · 12g lip</em></div></div><div class="meal-item"><div class="meal-title">🥗 Déjeuner (~400 kcal)</div><div class="meal-desc">Poulet grillé (150g) + quinoa (50g cru) + légumes à volonté + 1 c.s. huile d'olive<br><em>~40g prot · 30g glucides · 14g lip</em></div></div><div class="meal-item"><div class="meal-title">🍎 Collation (~130 kcal)</div><div class="meal-desc">1 yaourt grec 0% + quelques fraises ou 1 pomme + 8 amandes<br><em>~10g prot · 15g glucides · 4g lip</em></div></div><div class="meal-item"><div class="meal-title">🌙 Dîner (~400 kcal)</div><div class="meal-desc">Saumon (120g) ou cabillaud (150g) + patate douce (120g) + brocolis + citron<br><em>~35g prot · 30g glucides · 13g lip</em></div></div></div><div class="nutri-tip">⚠️ <strong>Glucides max ~130g/jour.</strong> Privilégie les sources à IG bas : patate douce, quinoa, légumineuses, flocons d'avoine. Évite les sucres rapides (pain blanc, jus, gâteaux). Les jours sans sport, vise plutôt 100g de glucides.</div><div class="nutri-tip" style="margin-top:0.5rem">💡 <strong>Astuce satiété :</strong> mange les protéines et légumes en premier, les féculents en dernier. Bois un grand verre d'eau 15 min avant le repas.</div></div>` + buildCalTracker() + buildFoodTable() + `<div class="info-section"><h3>🎯 Exercices ventre</h3><p>Les exercices marqués 🎯 ciblent le <strong>transverse</strong> et la gaine profonde post-grossesse. Ne les saute jamais !</p></div>`,
       );
+
+      initCal();
 
       let timerInterval = null,
         timerSeconds = 0;
